@@ -1,0 +1,129 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<style type="text/css">
+	
+	.sub_item {
+    float: left;
+    margin: 20px;
+    overflow: hidden;
+}
+</style>
+</head>
+<body class="container-fluid">
+	<div class="first_search_div">
+		<input type="text" name="s_key">
+		<select name="channel">
+			<option value="$movie">电影</option>
+			<option value="$teleplay">电视剧</option>
+			<option value="$variety">综艺</option>
+			<option value="$documentary">纪录片</option>
+			<option value="$entertainment">娱乐</option>
+			<option value="$music">音乐</option>
+			<option value="$comic">少儿</option>
+			<option value="$sport">体育</option>
+			<option value="$trailer">片花</option>
+			<option value="$education">教育</option>
+			<option value="$show">短片</option>
+		</select>
+		<button class="first_btn">检索</button>
+	</div>
+	<div class="first_div row">
+		
+	</div>
+	<div class="second_search_div hidden">
+		<input type="text" name="sn_key">
+		<button class="second_btn">检索</button>
+	</div>
+	<div class="second_title"></div>
+	<div class="second_div row">
+		
+
+	</div>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.12.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		
+		(function(){
+
+			$(".first_btn").click(function(){
+
+					var s_key = $("[name=s_key]").val();
+					var channel = $("[name=channel]").val();
+					$.ajax({
+						url:"http://schedule.lex.lenovopcsd.com/xxl-job-admin/redirect?url=http://cord.tvxio.com/v3_0/SKY2/tou/api/tv/search/"+channel+"/"+s_key+"/",
+						dataType:"jsonp",
+						jsonp:"callback",
+						success:function(res){
+							$(".first_div").empty();
+							if(res&&res.objects){
+								for(var i = 0 ;i<res.objects.length;i++){
+
+								var temDiv = $("<div class='sub_item'>");
+								temDiv.css({
+									 
+									height:200,
+									width:150
+								});
+								temDiv.append("<img src='"+res.objects[i].adlet_url+"'>");
+								var temDivTitle = $("<div class='sub_item_title'>");
+								temDivTitle.append("["+res.objects[i].pk+"]"+res.objects[i].title);
+								
+								temDiv.append(temDivTitle);
+								temDiv.data("data",res.objects[i]);
+								temDiv.click(function(){
+
+										var url = $(this).data("data").item_url;
+										$.ajax({
+																url:"http://schedule.lex.lenovopcsd.com/xxl-job-admin/redirect?url="+url,
+																dataType:"jsonp",
+																jsonp:"callback",
+																success:function(obj){
+																	$(".second_div").empty();
+																	if(obj){
+																		$(".second_title").html(obj.title);
+
+																		for(var i = 0 ;i<obj.subitems.length;i++){
+
+																		var temDiv2 = $("<div class='sub_item'>");
+																		temDiv2.css({
+																			height:200,
+																			width:150
+																		});
+																		temDiv2.append("<img src='"+obj.subitems[i].thumb_url+"'>");
+																		var temDivTitle2 = $("<div class='sub_item_title'>");
+																		temDivTitle2.append("["+obj.subitems[i].pk+"]"+obj.subitems[i].title);
+																		temDiv2.append(temDivTitle2);
+																		temDiv2.data("data",res.objects[i]);
+																		$(".second_div").append(temDiv2);
+																		}
+																	}
+																}
+															});
+
+
+								});
+								$(".first_div").append(temDiv);
+								}
+							}
+						}
+					});
+
+
+
+
+			});
+
+
+
+
+		})();
+
+
+
+	</script>
+</body>
+
+
+</html>
