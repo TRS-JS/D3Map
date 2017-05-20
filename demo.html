@@ -52,7 +52,7 @@
 					var s_key = $("[name=s_key]").val();
 					var channel = $("[name=channel]").val();
 					$.ajax({
-						url:"http://schedule.lex.lenovopcsd.com/xxl-job-admin/redirect?url=http://cord.tvxio.com/v3_0/SKY2/tou/api/tv/search/"+channel+"/"+s_key+"/",
+						url:"http://testdashboard.lex.lenovo.com.cn/vodn/redirect?url=http://cord.tvxio.com/v3_0/SKY2/tou/api/tv/search/"+channel+"/"+s_key+"/",
 						dataType:"jsonp",
 						jsonp:"callback",
 						success:function(res){
@@ -76,7 +76,7 @@
 
 										var url = $(this).data("data").item_url;
 										$.ajax({
-																url:"http://schedule.lex.lenovopcsd.com/xxl-job-admin/redirect?url="+url,
+																url:"http://testdashboard.lex.lenovo.com.cn/vodn/redirect?url="+url,
 																dataType:"jsonp",
 																jsonp:"callback",
 																success:function(obj){
