@@ -16,6 +16,7 @@
 	<div class="first_search_div">
 		<input type="text" name="s_key">
 		<select name="channel">
+			<option value="">全部</option>
 			<option value="$movie">电影</option>
 			<option value="$teleplay">电视剧</option>
 			<option value="$variety">综艺</option>
@@ -52,7 +53,7 @@
 					var s_key = $("[name=s_key]").val();
 					var channel = $("[name=channel]").val();
 					$.ajax({
-						url:"http://testdashboard.lex.lenovo.com.cn/vodn/redirect?url=http://cord.tvxio.com/v3_0/SKY2/tou/api/tv/search/"+channel+"/"+s_key+"/",
+						url:"http://testdashboard.lex.lenovo.com.cn/vodn/redirect?url=http://cord.tvxio.com/v3_0/SKY2/tou/api/tv/search/"+(channel==""?"":channel+"/")+s_key+"/",
 						dataType:"jsonp",
 						jsonp:"callback",
 						success:function(res){
